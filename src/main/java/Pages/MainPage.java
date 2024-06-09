@@ -3,9 +3,7 @@ package Pages;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
-
 import java.time.Duration;
-
 import static com.codeborne.selenide.Selenide.$;
 
 public class MainPage {
@@ -42,11 +40,17 @@ public class MainPage {
         logoutButton.shouldBe(Condition.visible, TIMEOUT);
     }
 
+    /**
+     * This method is for logging in with given username and password
+     * @param userName
+     * @param password
+     */
     public static void login(String userName, String password) {
-        MainPage.inputUserName("jjjsmith");
-        MainPage.inputPassword("uoEC1TkrUtqj");
+        MainPage.inputUserName(userName);
+        MainPage.inputPassword(password);
         MainPage.clickLoginButton();
         MainPage.validateSuccessfulLogin();
+        System.out.println("User " + userName + " is logged in");
     }
 
 

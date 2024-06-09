@@ -2,11 +2,10 @@ package Pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.openqa.selenium.By;
-
 import java.time.Duration;
-
+import static Util.HelperFunctions.generateRandomString;
+import static Util.HelperFunctions.validateElementVisible;
 import static com.codeborne.selenide.Selenide.$;
 
 public class RegistrationPage {
@@ -66,23 +65,32 @@ public class RegistrationPage {
         submitRegistrationButton.shouldBe(Condition.visible, TIMEOUT).click();
     }
 
-
-    public static void validateElementVisible(SelenideElement locator){
-        locator.shouldBe(Condition.visible,TIMEOUT);
-
-    }
+    /**
+     * Method to validate error messages
+     */
     public static void validateErrorMessages() {
+        System.out.println("Checking that error messages are displayed");
         validateElementVisible(zipCodeRequiredError);
         validateElementVisible(userNameRequiredError);
         validateElementVisible(passwordRequiredError);
         validateElementVisible(passwordConfirmationRequiredError);
-
     }
 
+    /**
+     * This method is to fill in new customer registration form and submit it
+     * @param firstName
+     * @param lastName
+     * @param address
+     * @param city
+     * @param state
+     * @param zipCode
+     * @param SSN
+     */
     public static void registerNewCustomer(String firstName, String lastName, String address,
                                                 String city, String state, String zipCode, String SSN){
 
         MainPage.clickRegisterNewCustomerButton();
+        System.out.println("Filling in user details on registration form");
         inputFirstName(firstName);
         inputLastName(lastName);
         inputaddress(address);
@@ -95,16 +103,9 @@ public class RegistrationPage {
         repeatPassword(password);
         clickSubmitRegistrationButton();
         welcomePageTitle.shouldBe(Condition.visible,TIMEOUT).shouldHave(Condition.text("Welcome " +username));
-
+        System.out.println("New customer is registered. Username is " + username + " password is " + password);
     }
-    public static String generateRandomString(int length) {
-        return RandomStringUtils.randomAlphanumeric(length);
 
-
-    }
-    public static String generateRandomNumber(int length) {
-        return RandomStringUtils.randomNumeric(length);
-        }
 
 }
 
